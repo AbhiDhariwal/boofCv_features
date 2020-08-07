@@ -269,8 +269,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startColourSeg(View view) {
-        Intent canny = new Intent(this, ColorHistogramSegmentationActivity.class);
-        startActivity(canny);
+        Intent colourSeg = new Intent(this, ColorHistogramSegmentationActivity.class);
+        startActivity(colourSeg);
     }
 
     public void startCannyEdge(View view) {
@@ -279,34 +279,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void processImage(View view) {
-
-
-        Bitmap bitmap = ((BitmapDrawable)fish.getDrawable()).getBitmap();
-
-        Bitmap abc = null;
-
-
-        GrayU8 gray = ConvertBitmap.bitmapToGray(bitmap,(GrayU8)null, null);
-        GrayU8 edgeImage = gray.createSameShape();
-
-        // Create a canny edge detector which will dynamically compute the threshold based on maximum edge intensity
-        // It has also been configured to save the trace as a graph.  This is the graph created while performing
-        // hysteresis thresholding.
-        CannyEdge<GrayU8,GrayS16> canny = FactoryEdgeDetectors.canny(5,true, true, GrayU8.class, GrayS16.class);
-
-        // The edge image is actually an optional parameter.  If you don't need it just pass in null
-        canny.process(gray,0.5f,0.9f,edgeImage);
-
-        Bitmap bitmap1 = ConvertBitmap.grayToBitmap(edgeImage,Bitmap.Config.ARGB_4444 );
-
-        fish.setImageBitmap(bitmap1);
-        // display the results
-//        BufferedImage visualBinary = VisualizeBinaryData.renderBinary(edgeImage, false, null);
-//        BufferedImage visualCannyContour = VisualizeBinaryData.renderContours(edgeContours,null,
-//                gray.width,gray.height,null);
-//        BufferedImage visualEdgeContour = new BufferedImage(gray.width, gray.height,BufferedImage.TYPE_INT_RGB);
-//        VisualizeBinaryData.render(contours, (int[]) null, visualEdgeContour);
-
+    public void QRActivity(View view) {
+        Intent qr = new Intent(this, QrCodeDetectActivity.class);
+        startActivity(qr);
     }
 }

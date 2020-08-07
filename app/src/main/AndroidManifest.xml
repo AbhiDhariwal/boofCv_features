@@ -36,6 +36,8 @@
 
         <activity android:name=".segmentation.ColorHistogramSegmentationActivity"/>
 
+        <activity android:name=".QrCodeDetectActivity"/>
+        <activity android:name=".QrCodeListActivity"/>
 
     </application>
 

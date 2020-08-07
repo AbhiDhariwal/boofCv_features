@@ -25,8 +25,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="processImage"
-        android:text="process image"
+        android:onClick="QRActivity"
+        android:text="Dectect Qr"
         tools:layout_editor_absoluteX="27dp"
         tools:layout_editor_absoluteY="357dp"
         />
