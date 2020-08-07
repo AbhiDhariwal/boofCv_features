@@ -65,6 +65,12 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
     Detector detectorType = Detector.STANDARD;
     Spinner spinnerDetector;
 
+
+    long startTime ;
+    long timerDuration = 5000;
+    long increaseTimerBy = 3000;
+
+
     public QrCodeDetectActivity() {
         super(Resolution.HIGH);
         super.changeResolutionOnSlow = true;
@@ -94,6 +100,8 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
 
         setControls(controls);
         displayView.setOnTouchListener(new TouchListener());
+
+        startTime = System.currentTimeMillis();
     }
 
     private class SelectedListener implements AdapterView.OnItemSelectedListener {
@@ -246,14 +254,14 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
 
             synchronized (uniqueLock) {
 
-                int qrCount = 0;
+//                int qrCount = 0;
 //                StringBuffer qrBuffer = new StringBuffer();
                 for (QrCode qr : detector.getDetector().getDetections()) {
                     if (qr.message == null) {
                         Log.e(TAG, "qr with null message?!?");
                     }
                     else{
-                        qrCount++;
+//                        qrCount++;
 //                        qrBuffer.append(qrCount + ":-" + qr.message + "\n");
                     }
                     if (!unique.containsKey(qr.message)) {
@@ -269,9 +277,21 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
                 }
 //                showMessage(qrBuffer.toString());
                 uniqueCount = unique.size();
-//                if(qrCount>1){
-//                    showMessage("more than 1 qr detected");
-//                }
+                long difference = System.currentTimeMillis() - startTime;
+                if(difference>timerDuration) {
+                    if (uniqueCount > 1) {
+                        showMessage("more than 1 qr detected");
+                    }
+                    if(uniqueCount == 1){
+                        //Switch to DetectionActivity
+                        showMessage("switching to detector activity");
+                    }
+                    if(uniqueCount<1){
+                        //if nothing found increase search duration by timerDuration
+                        timerDuration = timerDuration + increaseTimerBy;
+                        showMessage("nothing found increased timer duration");
+                    }
+                }
             }
 
             synchronized (lockGui) {
